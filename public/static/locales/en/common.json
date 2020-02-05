@@ -1,9 +1,12 @@
 {
   "default": "Message in english",
+  "signUp": "Sign Up",
+  "login": "Login",
   "languages": {
-    "es": "Spanish",
+    "pt": "Portuguese",
     "en": "English"
   },
+
   "phrases": {
     "features": "Features",
     "apiExample": "API example",

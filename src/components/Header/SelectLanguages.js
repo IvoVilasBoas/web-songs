@@ -1,35 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-
 import styled from '@emotion/styled';
-
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { i18n } from 'utils/with-i18next';
+import { color } from '../../../public/static/utils/colors';
+import { MEDIA_SIZES } from '../../../public/static/utils/mediaSizes';
 
-const SelectRoot = styled('select')`
-  border-radius: 4px;
-  width: 100px;
-  height: 30px;
-  border: solid #adb7c4 1px;
+const ListItem = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  @media only screen and (max-width: ${MEDIA_SIZES.MD_MAX}) {
+    display: none;
+  }
+`;
+
+const ItemLink = styled('a')`
+  color: ${color.BLACK};
+  font-size: 14px;
+  outline: none;
+  font-weight: ${props => (props.active ? 'bold' : 'normal')};
+  &:hover {
+    cursor: pointer;
+    color: ${color.PRIMARY};
+    font-weight: bold;
+  }
+`;
+
+const ButtonLink = styled('button')`
+  padding: 0;
+  background: inherit;
+  border: none;
+  color: ${color.BLACK};
+  margin-left: 10px;
+  outline: none;
+  &:hover {
+    cursor: pointer;
+    color: ${color.PRIMARY};
+  }
 `;
 
 export function SelectLanguages({ t }) {
-  const [select, setSelect] = useState(i18n.language);
+  const [select, setSelect] = useState(false);
 
   useEffect(() => {
     i18n.changeLanguage(select);
+    !select ? setSelect(i18n.language) : null;
   }, [select]);
 
-  const handleSelect = ev => {
+  const handleSelect = (ev, language) => {
     ev.preventDefault();
-
-    setSelect(ev.target.value);
+    setSelect(language);
   };
 
   return (
-    <SelectRoot name="languages" id="languages" value={select} onChange={handleSelect}>
-      <option value="es">{t('languages.es')}</option>
-      <option value="en">{t('languages.en')}</option>
-    </SelectRoot>
+    <ListItem>
+      <ButtonLink href="#" onClick={ev => handleSelect(ev, 'en')} onTouchEnd={ev => handleSelect(ev, 'en')}>
+        <ItemLink active={select && select === 'en'}>{t('languages.en')}</ItemLink>
+      </ButtonLink>
+      <ButtonLink href="#" onClick={ev => handleSelect(ev, 'pt')} onTouchEnd={ev => handleSelect(ev, 'pt')}>
+        <ItemLink active={select && select === 'pt'}>{t('languages.pt')}</ItemLink>
+      </ButtonLink>
+    </ListItem>
   );
 }
 
