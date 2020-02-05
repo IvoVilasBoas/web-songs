@@ -2,26 +2,22 @@ import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { i18n } from 'utils/with-i18next';
-import { color } from '../../../public/static/utils/colors';
-import { MEDIA_SIZES } from '../../../public/static/utils/mediaSizes';
+import { colorUtils } from '../../../public/static/utils/colors';
 
 const ListItem = styled('div')`
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-  @media only screen and (max-width: ${MEDIA_SIZES.MD_MAX}) {
-    display: none;
-  }
 `;
 
 const ItemLink = styled('a')`
-  color: ${color.BLACK};
+  color: ${colorUtils.BLACK};
   font-size: 14px;
   outline: none;
   font-weight: ${props => (props.active ? 'bold' : 'normal')};
   &:hover {
     cursor: pointer;
-    color: ${color.PRIMARY};
+    color: ${colorUtils.PRIMARY};
     font-weight: bold;
   }
 `;
@@ -30,12 +26,12 @@ const ButtonLink = styled('button')`
   padding: 0;
   background: inherit;
   border: none;
-  color: ${color.BLACK};
+  color: ${colorUtils.BLACK};
   margin-left: 10px;
   outline: none;
   &:hover {
     cursor: pointer;
-    color: ${color.PRIMARY};
+    color: ${colorUtils.PRIMARY};
   }
 `;
 

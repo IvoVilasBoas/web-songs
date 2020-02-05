@@ -1,7 +1,7 @@
 {
   "default": "Mensagem em Português",
   "signUp": "Registar",
-  "login": "Login",
+  "login": "Iniciar Sessão",
   "languages": {
     "pt": "Português",
     "en": "Inglês"
