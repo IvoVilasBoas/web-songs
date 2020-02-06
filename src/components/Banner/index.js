@@ -11,6 +11,7 @@ const BannerRoot = styled('div')`
   align-items: center;
   justify-content: center;
   margin-top: 50px;
+  padding-top: 30%;
 `;
 
 const Title = styled('h1')`

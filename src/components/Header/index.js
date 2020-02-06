@@ -1,89 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import Link from 'next/link';
-
 import styled from '@emotion/styled';
-
 import { withTranslation } from 'utils/with-i18next';
-
 import SelectLanguages from './SelectLanguages';
 
-const HeaderRoot = styled(`header`)`
-  left: 0;
-  width: 100%;
-  height: 64px;
-  position: sticky;
-  top: 0px;
-  z-index: 1000;
-`;
+import Nav from './../Nav/';
 
-const HeaderContainer = styled('div')`
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-`;
-
-const NavRoot = styled('nav')`
+const Wrapper = styled('header')`
+  width: 86%;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 16px;
-  height: 64px;
-  max-width: 1024px;
+  position: absolute;
+  left: 0;
+  z-index: 3;
 `;
 
-const ListItem = styled('div')`
-  display: flex;
-`;
+export const Header = ({ t }) => {
+  const [modal, setModal] = useState('');
+  const [logged, setLogged] = useState(true);
+  const [goTo, setGoTo] = useState('');
 
-const ItemLink = styled('a')`
-  color: #757575;
-  text-decoration: none;
-  margin-left: -5px;
-  margin-right: 2rem;
-  padding: 5px;
-
-  &:hover {
-    cursor: pointer;
-    color: #000;
+  function handleClick(option) {
+    console.log('handleClick Modal: ', modal);
+    console.log('handleClick Logged: ', logged);
+    console.log('handleClick GoTo: ', goTo);
+    switch (option) {
+      case 'register':
+        setModal('register');
+        break;
+      case 'login':
+        setModal('login');
+        break;
+      case 'profile':
+        setGoTo('profile');
+        break;
+      case 'logout':
+        setLogged(false);
+        setGoTo('logout');
+        break;
+      default:
+        break;
+    }
   }
-`;
 
-const ListActions = styled('div')`
-  display: flex;
-`;
-
-const Space = styled('div')`
-  flex: 1 1 auto;
-`;
-
-export function Header({ t }) {
   return (
-    <HeaderRoot>
-      <HeaderContainer>
-        <NavRoot>
-          <ListItem>
-            <Link href="#features">
-              <ItemLink>{t('phrases.features')}</ItemLink>
-            </Link>
-
-            <Link href="#exampleGetApi">
-              <ItemLink>{t('phrases.apiExample')}</ItemLink>
-            </Link>
-          </ListItem>
-
-          <Space />
-
-          <ListActions>
-            <SelectLanguages t={t} />
-          </ListActions>
-        </NavRoot>
-      </HeaderContainer>
-    </HeaderRoot>
+    <>
+      <Wrapper>
+        <SelectLanguages t={t} />
+        <Nav logged={logged} t={t} handleClick={handleClick} />
+      </Wrapper>
+    </>
   );
-}
+};
 
 Header.propTypes = {
   t: PropTypes.func,
