@@ -2,6 +2,8 @@
   "default": "Message in english",
   "signUp": "Sign Up",
   "login": "Login",
+  "profile": "Profile",
+  "logout": "Logout",
   "languages": {
     "pt": "Portuguese",
     "en": "English"

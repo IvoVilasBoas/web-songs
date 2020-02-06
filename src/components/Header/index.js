@@ -4,9 +4,7 @@ import styled from '@emotion/styled';
 import { withTranslation } from 'utils/with-i18next';
 import SelectLanguages from './SelectLanguages';
 
-import Auth from './../Auth/index';
 import Nav from './../Nav/';
-import Modal from '../HtmlElements/Modal';
 
 const Wrapper = styled('header')`
   width: 86%;
@@ -19,23 +17,39 @@ const Wrapper = styled('header')`
 `;
 
 export const Header = ({ t }) => {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState('');
+  const [logged, setLogged] = useState(true);
+  const [goTo, setGoTo] = useState('');
+
+  function handleClick(option) {
+    console.log('handleClick Modal: ', modal);
+    console.log('handleClick Logged: ', logged);
+    console.log('handleClick GoTo: ', goTo);
+    switch (option) {
+      case 'register':
+        setModal('register');
+        break;
+      case 'login':
+        setModal('login');
+        break;
+      case 'profile':
+        setGoTo('profile');
+        break;
+      case 'logout':
+        setLogged(false);
+        setGoTo('logout');
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       <Wrapper>
         <SelectLanguages t={t} />
-        <Nav setModal={setModal} t={t} />
+        <Nav logged={logged} t={t} handleClick={handleClick} />
       </Wrapper>
-      {modal === 'login' && (
-        <Modal onClose={() => setModal(false)}>
-          <Auth type="login" />
-        </Modal>
-      )}
-      {modal === 'register' && (
-        <Modal onClose={() => setModal(false)}>
-          <Auth type="register" />
-        </Modal>
-      )}
     </>
   );
 };

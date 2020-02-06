@@ -2,6 +2,8 @@
   "default": "Mensagem em Português",
   "signUp": "Registar",
   "login": "Iniciar Sessão",
+  "profile": "Perfil",
+  "logout": "Logout",
   "languages": {
     "pt": "Português",
     "en": "Inglês"
