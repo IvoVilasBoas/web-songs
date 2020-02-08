@@ -17,7 +17,7 @@ const initialState = {
   password: '',
 };
 
-const RegisterForm = props => {
+const LoginForm = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { handleFormSubmit, t, handleContent, loading, error, errorValidation } = props;
 
@@ -34,7 +34,7 @@ const RegisterForm = props => {
       <form onSubmit={e => handleFormSubmit(e, state)} href="#!">
         <CssBaseline />
         <Typography variant="h5" align="center" component="h2" gutterBottom>
-          {t('signUp')}
+          {t('login')}
         </Typography>
         <Paper style={{ padding: 16 }}>
           <Grid container alignItems="flex-start" spacing={2}>
@@ -48,20 +48,6 @@ const RegisterForm = props => {
                 onChange={handleInputs}
                 required
                 error={errorValidation && errorValidation.email}
-              />
-            </Grid>
-          </Grid>
-          <Grid container alignItems="flex-start" spacing={2}>
-            <Grid item xs={12}>
-              <Input
-                name="name"
-                type="text"
-                placeholder={t('modalRegistration.name')}
-                value={state.firstName}
-                icon="user"
-                onChange={handleInputs}
-                required
-                error={errorValidation && errorValidation.firstName}
               />
             </Grid>
           </Grid>
@@ -82,10 +68,13 @@ const RegisterForm = props => {
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item style={{ marginTop: 16 }}>
               <Button variant="contained" color="primary" type="submit">
-                {t('signUp')}
-              </Button>
-              <Button color="primary" onClick={() => handleContent('login')} onTouchEnd={() => handleContent('signUp')}>
                 {t('login')}
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => handleContent('signUp')}
+                onTouchEnd={() => handleContent('signUp')}>
+                {t('signUp')}
               </Button>
             </Grid>
           </Grid>
@@ -100,7 +89,7 @@ const RegisterForm = props => {
   );
 };
 
-RegisterForm.propTypes = {
+LoginForm.propTypes = {
   t: PropTypes.func,
   handleFormSubmit: PropTypes.func,
   handleClick: PropTypes.func,
@@ -109,4 +98,4 @@ RegisterForm.propTypes = {
   errorValidation: PropTypes.any,
 };
 
-export default RegisterForm;
+export default LoginForm;

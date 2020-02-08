@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
@@ -33,21 +33,15 @@ const ModalContent = styled('div')`
 `;
 
 const Modal = props => {
-  const { onClose, type } = props;
-  const [content, setContent] = useState(type);
+  const { onClose, type, handleClick } = props;
   let modalContent = '';
 
-  const handleContent = modal => {
-    console.log('Modal HandleContent_ ', modal);
-    setContent(modal);
-  };
-
-  switch (content) {
+  switch (type) {
     case 'signUp':
-      modalContent = <Register handleContent={handleContent} />;
+      modalContent = <Register handleContent={handleClick} />;
       break;
     case 'login':
-      modalContent = <Login handleContent={handleContent} />;
+      modalContent = <Login handleContent={handleClick} />;
       break;
     default:
       break;
@@ -55,9 +49,7 @@ const Modal = props => {
   return (
     <Wrapper>
       <Cortain onClick={onClose} />
-      <ModalContent>
-        <div className="content">{modalContent}</div>
-      </ModalContent>
+      <ModalContent>{modalContent}</ModalContent>
     </Wrapper>
   );
 };
@@ -65,6 +57,7 @@ const Modal = props => {
 Modal.propTypes = {
   onClose: PropTypes.func,
   type: PropTypes.string,
+  handleClick: PropTypes.func,
 };
 
 export default Modal;
