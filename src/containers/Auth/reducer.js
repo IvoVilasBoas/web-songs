@@ -7,6 +7,7 @@ export const initialState = {
   type: '',
   registerResults: [],
   loginResults: [],
+  registedSuccess: false,
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
@@ -14,9 +15,10 @@ const authReducer = (state = initialState, { type, payload }) => {
     case doRegister.REQUEST:
       return { ...state, loading: true, error: false };
     case doRegister.SUCCESS:
-      return { ...state, loading: false, error: false, registerResults: payload };
+      return { ...state, loading: false, error: false, registerResults: payload, registedSuccess: true };
     case doRegister.FAILURE:
       return { ...state, loading: false, error: payload };
+
     case doLogin.REQUEST:
       return { ...state, loading: true, error: false };
     case doLogin.SUCCESS:

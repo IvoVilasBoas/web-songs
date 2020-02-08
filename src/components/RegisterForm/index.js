@@ -10,6 +10,7 @@ import reducer from './reducer';
 import Alert from '../Alert';
 import Input from '../HtmlElements/Input';
 import { Button, Grid, Paper, CssBaseline, Typography } from '@material-ui/core';
+import Spiner from '../Spiner';
 
 const initialState = {
   email: '',
@@ -19,7 +20,7 @@ const initialState = {
 
 const RegisterForm = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { handleFormSubmit, t, handleContent, loading, error, errorValidation } = props;
+  const { handleFormSubmit, t, handleContent, loading, error, errorValidation, registedSuccess } = props;
 
   const handleInputs = e => {
     dispatch({
@@ -29,7 +30,7 @@ const RegisterForm = props => {
   };
 
   return (
-    console.log('Loading', loading),
+    console.log('error', error),
     (
       <form onSubmit={e => handleFormSubmit(e, state)} href="#!">
         <CssBaseline />
@@ -82,7 +83,7 @@ const RegisterForm = props => {
           <Grid container alignItems="flex-start" spacing={2}>
             <Grid item style={{ marginTop: 16 }}>
               <Button variant="contained" color="primary" type="submit">
-                {t('signUp')}
+                {!loading ? t('signUp') : <Spiner color="inherit" size={18} />}
               </Button>
               <Button color="primary" onClick={() => handleContent('login')} onTouchEnd={() => handleContent('signUp')}>
                 {t('login')}
@@ -93,6 +94,11 @@ const RegisterForm = props => {
         {error && (
           <Alert variant="outlined" severity="error">
             {error && error.message}
+          </Alert>
+        )}
+        {!error && registedSuccess && (
+          <Alert variant="outlined" severity="success">
+            {t('register.success')}
           </Alert>
         )}
       </form>
@@ -107,6 +113,7 @@ RegisterForm.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   errorValidation: PropTypes.any,
+  registedSuccess: PropTypes.bool,
 };
 
 export default RegisterForm;
