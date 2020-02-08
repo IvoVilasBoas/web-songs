@@ -8,6 +8,11 @@
     "pt": "Portuguese",
     "en": "English"
   },
+  "modalRegistration": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password"
+  },
 
   "phrases": {
     "features": "Features",
