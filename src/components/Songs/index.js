@@ -1,4 +1,4 @@
-import React /*, { useState, useEffect } */ from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'utils/with-i18next';
 
@@ -12,7 +12,7 @@ const Wrapper = styled('section')`
   overflow: hidden;
 `;
 
-const SongssWrapper = styled('div')`
+const SongsWrapper = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,13 +35,14 @@ const settings = {
   ],
 };
 
-export const Songs = ({ t, songs, id }) => {
+const Songs = props => {
+  const { t, songs } = props;
   return (
     <>
-      <Wrapper id={id}>
-        <SongssWrapper>
+      <Wrapper id="songs">
+        <SongsWrapper>
           <Slider {...settings}>{songs && songs.map(item => <Song t={t} key={item.id} song={item} />)}</Slider>
-        </SongssWrapper>
+        </SongsWrapper>
       </Wrapper>
     </>
   );
@@ -49,7 +50,6 @@ export const Songs = ({ t, songs, id }) => {
 
 Songs.propTypes = {
   t: PropTypes.func,
-  id: PropTypes.string,
   songs: PropTypes.array,
 };
 

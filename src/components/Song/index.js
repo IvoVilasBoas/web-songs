@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withTranslation } from 'utils/with-i18next';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -17,35 +20,38 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard() {
+const Song = props => {
+  const { t, song } = props;
   const classes = useStyles();
-
+  console.log('SonG', song);
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
+        <CardMedia className={classes.media} image={song.imgUrl} title={song.title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {song.artist}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents
-            except Antarctica
+            {song.year}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          Share
+          {t('share')}
         </Button>
         <Button size="small" color="primary">
-          Learn More
+          {t('learMore')}
         </Button>
       </CardActions>
     </Card>
   );
-}
+};
+
+Song.propTypes = {
+  t: PropTypes.func,
+  song: PropTypes.object,
+};
+
+export default withTranslation('common')(Song);

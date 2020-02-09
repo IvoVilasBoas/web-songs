@@ -24,7 +24,7 @@ const Home = props => {
 
   const [user, setUser] = useState(null);
   const [userLogged, setUserLogged] = useState(false);
-  const [songs, setSongs] = [];
+  const [songs, setSongs] = useState();
 
   useEffect(() => {
     let localStorage;
@@ -45,10 +45,10 @@ const Home = props => {
   }, []);
 
   useEffect(() => {
-    console.log('songsData', songsResults);
-    console.log('Songs', songs);
+    console.log('songsData', songsResults.songsResults);
     try {
-      setSongs(songsResults.songs);
+      setSongs(songsResults.songsResults);
+      console.log('Songs', songs);
     } catch (error) {
       console.log('Use Effect SongResults Catch', error);
     }
@@ -63,7 +63,7 @@ const Home = props => {
   return (
     <Layout>
       <Header t={t} userLogged={userLogged} logout={() => logout()} />
-      {!userLogged ? <Banner t={t} /> : songsResults.songs && songsResults.songs.length > 3 && <Songs></Songs>}
+      {!userLogged ? <Banner t={t} /> : songs && songs.length > 3 && <Songs t={t} songs={songs}></Songs>}
     </Layout>
   );
 };
