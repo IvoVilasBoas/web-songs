@@ -1,0 +1,22 @@
+{
+  "default": "Message in english",
+  "signUp": "Sign Up",
+  "login": "Login",
+  "profile": "Profile",
+  "logout": "Logout",
+  "languages": {
+    "pt": "Portuguese",
+    "en": "English"
+  },
+  "modalRegistration": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password"
+  },
+
+  "phrases": {
+    "features": "Features",
+    "apiExample": "API example",
+    "getShowcases": "Companies / Sites using Next.js"
+  }
+}
