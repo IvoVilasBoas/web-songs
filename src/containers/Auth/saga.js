@@ -34,12 +34,26 @@ export function* register(state) {
 
 export function* login(state) {
   console.log('SAGA Login State:', state);
+  const BASE_URL = `${apiPath}/auth/login`;
+  const login = state.payload;
   try {
-    yield put(doRegister.success());
+    yield put(doLogin.request());
+    const loginResults = yield call(request, BASE_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: login.email,
+        password: login.password,
+      }),
+    });
+    yield put(doLogin.success(loginResults));
   } catch (error) {
-    yield put(doRegister.failure(error));
+    yield put(doLogin.failure(error));
   } finally {
-    yield put(doRegister.fulfill());
+    yield put(doLogin.fulfill());
   }
 }
 

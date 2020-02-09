@@ -38,10 +38,10 @@ const Modal = props => {
 
   switch (type) {
     case 'signUp':
-      modalContent = <Register handleContent={handleClick} />;
+      modalContent = <Register handleContent={handleClick} onClose={onClose} />;
       break;
     case 'login':
-      modalContent = <Login handleContent={handleClick} />;
+      modalContent = <Login handleContent={handleClick} onClose={onClose} />;
       break;
     default:
       break;

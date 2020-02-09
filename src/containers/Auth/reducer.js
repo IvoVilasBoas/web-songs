@@ -6,8 +6,8 @@ export const initialState = {
   payload: false,
   type: '',
   registerResults: [],
-  loginResults: [],
   registedSuccess: false,
+  loginResults: [],
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
@@ -24,7 +24,7 @@ const authReducer = (state = initialState, { type, payload }) => {
     case doLogin.SUCCESS:
       return { ...state, loading: false, error: false, loginResults: payload };
     case doLogin.FAILURE:
-      return { ...state, loading: false, error: !payload ? '410' : payload };
+      return { ...state, loading: false, error: payload };
     default:
       return state;
   }
