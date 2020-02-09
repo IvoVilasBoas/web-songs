@@ -1,36 +1,23 @@
-import produce from 'immer';
-
-import { getShowcases } from './actions';
+import { getCurrentUser } from './actions';
 
 export const initialState = {
   loading: false,
   fetched: false,
   error: null,
-  showcases: [],
+  currentUser: [],
 };
 
-const showcasesReducer = (state = initialState, { type, payload }) =>
-  produce(state, draft => {
-    switch (type) {
-      case getShowcases.REQUEST:
-        draft.loading = true;
+const currentUserReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case getCurrentUser.REQUEST:
+      return { ...state, loading: true, error: false };
+    case getCurrentUser.SUCCESS:
+      return { ...state, loading: false, error: false, currentUser: payload };
+    case getCurrentUser.FAILURE:
+      return { ...state, loading: false, error: payload };
+    default:
+      return state;
+  }
+};
 
-        break;
-
-      case getShowcases.SUCCESS:
-        draft.loading = false;
-        draft.fetched = true;
-        draft.showcases = payload.data;
-
-        break;
-
-      case getShowcases.FAILURE:
-        draft.loading = false;
-        draft.fetched = false;
-        draft.error = payload;
-
-        break;
-    }
-  });
-
-export default showcasesReducer;
+export default currentUserReducer;

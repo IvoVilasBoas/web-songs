@@ -7,37 +7,31 @@ import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { withTranslation } from 'utils/with-i18next';
-import { useCookies } from 'react-cookie';
-import { useRouter } from 'next/router';
+import jwt from 'jsonwebtoken';
 
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
+import { doLogin } from '../actions';
 import { useInjectReducer } from 'utils/inject-reducer';
 import { useInjectSaga } from 'utils/inject-saga';
-
 import saga from '../saga';
 import reducer from '../reducer';
-import { doLogin } from '../actions';
+import { createStructuredSelector } from 'reselect';
 import { selectAuthLogin } from '../selectors';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 import LoginForm from '../../../components/LoginForm';
-
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
-const Wrapper = styled('section')``;
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+const Wrapper = styled('section')``;
+
 const Login = props => {
   const { t, handleContent, loginResults, doLogin } = props;
   const [open, setOpen] = React.useState(false);
-  const [setCookie] = useCookies(['token']);
-  const router = useRouter();
 
   const handleClose = reason => {
     console.log(reason);
@@ -53,23 +47,44 @@ const Login = props => {
 
   const handleFormSubmit = (e, state) => {
     e.preventDefault();
-    console.log('handleFormSubmit Sate', state);
     doLogin(state);
   };
 
   useEffect(() => {
-    setCookie('token', loginResults.token);
-    router.push('/home');
-  }, [loginResults.token]);
+    if (loginResults.loginResults.loginSuccess) {
+      setOpen(true);
+    }
+  }, [loginResults.loginResults]);
+
+  useEffect(() => {
+    //setCookie('token', loginResults.token);
+    //router.push('/home');
+    const decodedToken = jwt.decode(loginResults.loginResults.token);
+
+    console.log('DECODED TOKEN', decodedToken);
+    let localStorage;
+    console.log('LoginToken', loginResults);
+    if (loginResults.loginResults) {
+      try {
+        localStorage = window.localStorage;
+        localStorage.setItem('currentUser', loginResults.loginResults.token);
+      } catch (error) {
+        localStorage = {
+          getItem: undefined,
+          setItem: () => {},
+        };
+      }
+    }
+  }, [loginResults.loginResults.token]);
 
   return (
     <Wrapper>
       <LoginForm
         t={t}
-        loading={loginResults.loading}
+        loading={loginResults.loginResults.loading}
         handleFormSubmit={handleFormSubmit}
         handleContent={handleContent}
-        error={loginResults.error}
+        error={loginResults.loginResults.error}
         errorValidation={null}
       />
 
