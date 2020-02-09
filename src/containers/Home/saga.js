@@ -1,25 +1,32 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
 import request from 'utils/request';
+import { apiPath } from 'utils/apiUtils.js';
 
-import { getShowcases } from './actions';
+import { getCurrentUser } from './actions';
 
-export function* getShowcasesRequest() {
-  const BASE_URL = 'https://us-central1-react-next-boilerplate-cda8b.cloudfunctions.net/getShowcasesData';
+export function* getCurrentUserRequest() {
+  const BASE_URL = `${apiPath}/users/me`;
 
   try {
-    yield put(getShowcases.request());
+    yield put(getCurrentUser.request());
 
-    const showcasesdata = yield call(request, BASE_URL);
+    const getCurrentUserData = yield call(request, BASE_URL, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
 
-    yield put(getShowcases.success(showcasesdata));
+    yield put(getCurrentUser.success(getCurrentUserData));
   } catch (err) {
-    yield put(getShowcases.failure(err));
+    yield put(getCurrentUser.failure(err));
   } finally {
-    yield put(getShowcases.fulfill());
+    yield put(getCurrentUser.fulfill());
   }
 }
 
-export default function* dataShowcases() {
-  yield takeLatest(getShowcases.TRIGGER, getShowcasesRequest);
+export default function* currentUserCases() {
+  yield takeLatest(getCurrentUser.TRIGGER, getCurrentUserRequest);
 }

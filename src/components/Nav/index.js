@@ -35,7 +35,7 @@ const ButtonLink = styled('button')`
 `;
 
 const Nav = props => {
-  const { t, handleClick, logged } = props;
+  const { t, handleClick, logged, logout } = props;
 
   return (
     <>
@@ -44,7 +44,7 @@ const Nav = props => {
           <ButtonLink href="#" onClick={() => handleClick('profile')} onTouchEnd={() => handleClick('profile')}>
             <ItemLink>{t('profile')}</ItemLink>
           </ButtonLink>
-          <ButtonLink href="#" onClick={() => handleClick('logout')} onTouchEnd={() => handleClick('logout')}>
+          <ButtonLink href="#" onClick={() => logout()} onTouchEnd={() => handleClick()}>
             <ItemLink>{t('logout')}</ItemLink>
           </ButtonLink>
         </ListItem>
@@ -66,6 +66,7 @@ Nav.propTypes = {
   t: PropTypes.func,
   handleClick: PropTypes.func,
   logged: PropTypes.bool,
+  logout: PropTypes.func,
 };
 
 export default Nav;
