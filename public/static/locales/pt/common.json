@@ -8,6 +8,11 @@
     "pt": "Português",
     "en": "Inglês"
   },
+  "modalRegistration": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password"
+  },
   "phrases": {
     "features": "Caracteristicas",
     "apiExample": "Ejemplo con api",
