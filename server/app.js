@@ -1,34 +1,33 @@
+const { setConfig } = require('next/config');
+setConfig(require('../next.config'));
+
 const express = require('express');
 const next = require('next');
+const { Signale } = require('signale');
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV === 'production';
-const app = next({ dev });
+const dev = process.env.NODE_ENV !== 'production';
+const nextI18NextMiddleware = require('next-i18next/middleware').default;
+const nextI18next = require('../i18n');
+
+const port = process.env.PORT || 3000;
+const app = next({ dir: './src', dev });
+
 const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
+const options = {
+  scope: 'app server',
+};
+const signale = new Signale(options);
+
+(async () => {
+  await app.prepare();
   const server = express();
 
-  server.get('/projects/:page', (req, res) => {
-    const page = req.params.page;
-    let file = '';
-    switch (page) {
-      case 'example1':
-        file = '/projects/example1';
-        break;
-      case 'example2':
-        file = '/projects/example2';
-        break;
-    }
-    return app.render(req, res, file, { page });
-  });
+  server.use(nextI18NextMiddleware(nextI18next));
+  server.use('/static', express.static('public/static'));
 
-  server.get('*', (req, res) => {
-    return handle(req, res);
-  });
+  server.get('*', (req, res) => handle(req, res));
 
-  server.listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
-});
+  await server.listen(port);
+  signale.success(`<> React Next Boilerplate ready on localhost:${port}`);
+})();

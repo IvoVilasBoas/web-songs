@@ -2,10 +2,8 @@ import { createSelector } from 'reselect';
 
 import { initialState } from './reducer';
 
-const selectShowcasesDomain = state => state.showcases || initialState;
-const selectCurrentUserDomain = state => state.currentUser || initialState;
+const selectSongsDomain = state => state.home || initialState;
 
-const selectShowcases = () => createSelector(selectShowcasesDomain, subState => subState);
-const selectCurrentUser = () => createSelector(selectCurrentUserDomain, subState => subState);
-
-export { selectShowcases, selectShowcasesDomain, selectCurrentUser, selectCurrentUserDomain };
+const selectCurrentUser = () => createSelector(selectSongsDomain, subState => subState);
+const selectSongs = () => createSelector(selectSongsDomain, subState => subState);
+export { selectCurrentUser, selectSongs, selectSongsDomain };
