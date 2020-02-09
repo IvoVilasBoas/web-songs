@@ -1,1 +1,1 @@
-export const GET_SHOWCASES = 'app/Example/GET_SHOWCASES';
+export const GET_CURRENT_USER = 'app/Home/GET_CURRENT_USER';

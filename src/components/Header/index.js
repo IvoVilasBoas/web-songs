@@ -14,9 +14,8 @@ const Wrapper = styled('header')`
   z-index: 3;
 `;
 
-export const Header = ({ t }) => {
+export const Header = ({ t, userLogged, logout }) => {
   const [modal, setModal] = useState('');
-  const [logged, setLogged] = useState(false);
   const [goTo, setGoTo] = useState('');
 
   function handleClick(option) {
@@ -31,15 +30,11 @@ export const Header = ({ t }) => {
       case 'profile':
         setGoTo('profile');
         break;
-      case 'logout':
-        setLogged(false);
-        setGoTo('logout');
-        break;
       default:
         break;
     }
     console.log('handleClick Modal: ', modal);
-    console.log('handleClick Logged: ', logged);
+    console.log('handleClick Logged: ', userLogged);
     console.log('handleClick GoTo: ', goTo);
   }
 
@@ -47,7 +42,7 @@ export const Header = ({ t }) => {
     <>
       <Wrapper>
         <SelectLanguages t={t} />
-        <Nav logged={logged} t={t} handleClick={handleClick} />
+        <Nav logged={userLogged} t={t} handleClick={handleClick} logout={logout} />
 
         {modal === 'login' && <Modal onClose={() => setModal(false)} handleClick={handleClick} type={'login'} />}
         {modal === 'signUp' && <Modal onClose={() => setModal(false)} handleClick={handleClick} type={'signUp'} />}
@@ -58,6 +53,8 @@ export const Header = ({ t }) => {
 
 Header.propTypes = {
   t: PropTypes.func,
+  userLogged: PropTypes.bool,
+  logout: PropTypes.func,
 };
 
 export default withTranslation('common')(Header);
